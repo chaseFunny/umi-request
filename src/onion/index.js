@@ -7,12 +7,12 @@ class Onion {
     this.defaultMiddlewares = [...defaultMiddlewares];
     this.middlewares = [];
   }
-
+  // 不同类型中间件的存储容器
   static globalMiddlewares = []; // 全局中间件
   static defaultGlobalMiddlewaresLength = 0; // 内置全局中间件长度
   static coreMiddlewares = []; // 内核中间件
   static defaultCoreMiddlewaresLength = 0; // 内置内核中间件长度
-
+  // 添加中间件的方法，接收一个中间件函数和一个配置对象，返回的是 onion 实例，所以可以链式调用
   use(newMiddleware, opts = { global: false, core: false, defaultInstance: false }) {
     let core = false;
     let global = false;
@@ -53,10 +53,10 @@ class Onion {
       return;
     }
 
-    // 实例中间件
+    // 实例中间件（默认的）
     this.middlewares.push(newMiddleware);
   }
-
+  // 执行中间件的方法，接收一个参数，返回一个 promise 对象
   execute(params = null) {
     const fn = compose([
       ...this.middlewares,
